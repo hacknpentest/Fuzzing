@@ -1,0 +1,87 @@
+1. WFUZZ
+
+====================================================================================
+
+ #    #  ######  #    #  ######  ######
+ #    #  #       #    #      #       #
+ #    #  #####   #    #     #       #
+ # ## #  #       #    #    #       #
+ ##  ##  #       #    #   #       #
+ #    #  #        ####   ######  ######
+
+
+====================================================================================
+
+--------------------------------------------------------------------------------------
+(i) USE WFUZZ TO ENUMERATE CORRECT PARAMETER FOR A PAGE.
+---------------------------------------------------------------------------------------
+
+COMMNAD = wfuzz -c -w /usr/share/wfuzz/wordlist/general/common.txt  --hc 404 http://website.com/secret.php?FUZZ=something
+
+And the result is given below
+
+000216:  C=200      7 L	      12 W	    136 Ch	  "configs"
+000200:  C=200      7 L	      12 W	    136 Ch	  "cm"
+000201:  C=200      7 L	      12 W	    136 Ch	  "cmd"
+000195:  C=200      7 L	      12 W	    136 Ch	  "classified"
+000197:  C=200      7 L	      12 W	    136 Ch	  "client"
+000204:  C=200      7 L	      12 W	    136 Ch	  "coke"
+000198:  C=200      7 L	      12 W	    136 Ch	  "clients"
+000220:  C=200      7 L	      12 W	    136 Ch	  "connections"
+000219:  C=200      7 L	      12 W	    136 Ch	  "connect"
+000196:  C=200      7 L	      12 W	    136 Ch	  "classifieds"
+Finishing pending requests...
+
+
+----------------------------------------------------------------------------------------------------------------------
+(ii) BUT ABOVE COMMND FAILED IF PAGE ALWAYS RETURN 200(HTTP REPONSE). NOW OUR MODIFIED COMMAND IS  =======>
+----------------------------------------------------------------------------------------------------------------------
+
+COMMAND = wfuzz -c -w /usr/share/wfuzz/wordlist/general/common.txt  --hc 404 --hw 500 http://website-ip/index.php?FUZZ=something
+
+And it will return result which is given below.
+
+Total requests: 950
+
+==================================================================
+ID	Response   Lines      Word         Chars          Payload    
+==================================================================
+
+000357:  C=200      70 L	      500 W	    2006 Ch	  "file"
+
+Total time: 3.753362
+Processed Requests: 950
+Filtered Requests: 949
+Requests/sec.: 253.1063
+
+Here we can see C=200(Our HTTP Respone from server). 
+7 L ==> It means 7 lines return by server. 
+500 W  ==> It means 19 words total count by wfuzz.
+2006 Ch  ==> It means 206 total chars count by wfuzz which is return by server.
+
+After using filter we can remove wrong parameter from our output and right output with right parameter we get.
+
+--------------------------------------------------------------------------------------------------------
+(*)WORKING WITH FILTERS:                                                                               |   
+
+(i) If we want to filter words then we used switch --hw (words_lenth. In above example --hw 12)        |
+(ii) To filter lenth then we used --hl(In above above example this would be --hl 7)
+(iii) For chars we used --hh (In above example this would br --hh 206)                                 |
+(iv) For response code we use --hc. And always we attach --hc 404. Because this is common for all.
+                                                                                                       |                                                
+--------------------------------------------------------------------------------------------------------
+      
+
+----------------------------------------------------------------
+
+(iii) USE WFUZZ TO FIND OUT SUBDOMAINS.
+
+----------------------------------------------------------------
+
+COMMAND ==>  wfuzz -c -w /usr/share/seclists//usr/share/seclists/Discovery/DNS --hc 404 --hw 617 -u website.com -H "HOST: FUZZ.website.com"
+
+
+USE filter to reach your actual subdomains like below command.
+
+COMMAND  ==> wfuzz -c -w /usr/share/seclists//usr/share/seclists/Discovery/DNS --hc 404 --hw 617 -u website.com -H "HOST: FUZZ.website.com"
+
