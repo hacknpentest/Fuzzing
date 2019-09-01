@@ -20,16 +20,12 @@ COMMNAD = wfuzz -c -w /usr/share/wfuzz/wordlist/general/common.txt  --hc 404 htt
 
 And the result is given below
 
-000216:  C=200      7 L	      12 W	    136 Ch	  "configs"
-000200:  C=200      7 L	      12 W	    136 Ch	  "cm"
-000201:  C=200      7 L	      12 W	    136 Ch	  "cmd"
-000195:  C=200      7 L	      12 W	    136 Ch	  "classified"
-000197:  C=200      7 L	      12 W	    136 Ch	  "client"
-000204:  C=200      7 L	      12 W	    136 Ch	  "coke"
-000198:  C=200      7 L	      12 W	    136 Ch	  "clients"
-000220:  C=200      7 L	      12 W	    136 Ch	  "connections"
-000219:  C=200      7 L	      12 W	    136 Ch	  "connect"
-000196:  C=200      7 L	      12 W	    136 Ch	  "classifieds"
+000216:  C=200      70 L	      500 W	    2006 Ch	  "configs"
+000200:  C=200      70 L	      500 W	    2006 Ch	  "cm"
+000201:  C=200      70 L	      500 W	    2006 Ch	  "cmd"
+000195:  C=200      70 L	      500 W	    2006 Ch	  "classified"
+000197:  C=200      70 L	      500 W	    2006 Ch	  "client"
+000204:  C=200      70 L	      500 W	    2006 Ch	  "coke"
 Finishing pending requests...
 
 
